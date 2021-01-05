@@ -2,4 +2,7 @@ module github.com/codemicro/cs-cyberpet
 
 go 1.15
 
-require github.com/nsf/termbox-go v0.0.0-20201124104050-ed494de23a00 // indirect
+require (
+	github.com/gdamore/tcell v1.4.0
+	github.com/mattn/go-runewidth v0.0.9 // indirect
+)
