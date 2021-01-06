@@ -9,3 +9,10 @@ func FindLongestString(x []string) int {
 	}
 	return longest
 }
+
+func MakeRuneSlice(r rune, length int) (o []rune) {
+	for i := 0; i < length; i += 1 {
+		o = append(o, r)
+	}
+	return
+}
