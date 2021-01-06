@@ -2,7 +2,6 @@ package display
 
 import (
 	"errors"
-	"fmt"
 	"io"
 )
 
@@ -56,5 +55,5 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 		Screen.Show()
 	}
 
-	return fmt.Sprint(inp), nil
+	return string(inp), nil
 }

@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const BottomLineHeight = 3
+const BottomLineHeight = 4
 
 var Screen tcell.Screen
 
