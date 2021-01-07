@@ -13,12 +13,12 @@ const (
 	horiChar = '─'
 )
 
-func Box(topLeftX, topLeftY, bottomRightX, bottomRightY int) {
-	rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY)
+func Box(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
+	rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY, title)
 	Screen.Show()
 }
 
-func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int) {
+func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	width := bottomRightX - topLeftX
 	height := bottomRightY - topLeftY
 
@@ -44,6 +44,9 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int) {
 
 		topLine[0] = tlChar
 		topLine[len(topLine) - 1] = trChar
+		for i, v := range title {
+			topLine[i + 1] = v
+		}
 
 		bottomLine[0] = blChar
 		bottomLine[len(bottomLine) - 1] = brChar
