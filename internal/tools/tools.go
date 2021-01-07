@@ -16,3 +16,10 @@ func MakeRuneSlice(r rune, length int) (o []rune) {
 	}
 	return
 }
+
+func RightPadString(in string, newLen int, pad rune) string {
+	for i := 0; i < newLen - len(in); i += 1 {
+		in += string(pad)
+	}
+	return in
+}
