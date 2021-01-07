@@ -82,7 +82,7 @@ func CharacterSay(in string, tuxX, tuxY, longestPart, yOffset int) (clearFunc fu
 	}
 	Screen.Show()
 	return func() {
-		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestString(splitLines) + 2))
+		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines) + 2))
 		for i := 0; i < len(splitLines); i += 1 {
 			rawPrintString(blankString, tuxX + longestPart, tuxY + yOffset + i)
 		}

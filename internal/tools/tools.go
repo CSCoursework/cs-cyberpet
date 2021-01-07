@@ -1,6 +1,6 @@
 package tools
 
-func FindLongestString(x []string) int {
+func FindLongestStringLen(x []string) int {
 	var longest int
 	for _, y := range x {
 		if z := len(y); z > longest {
