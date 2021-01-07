@@ -1,12 +1,24 @@
 package display
 
-const (
-	infoBoxSizeX = 35
-	infoBoxSizeY = 7
+import (
+	"github.com/codemicro/cs-cyberpet/internal/pet"
+	"github.com/codemicro/cs-cyberpet/internal/tools"
+)
 
+const (
 	infoBoxPosX = 2
 	infoBoxPosY = 1
 )
+
+var (
+	infoBoxSizeX int
+	infoBoxSizeY int
+)
+
+func init() {
+	infoBoxSizeX = tools.FindLongestStringLen(pet.StatNames) + 4 + statTickerLen // plus four compensates for weird spacing
+	infoBoxSizeY = len(pet.DefaultPetStats) + 1 // plus one compensating for the top bottom border
+}
 
 func Scaffold() {
 	_, dispY := Screen.Size()
