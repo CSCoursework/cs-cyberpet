@@ -63,3 +63,22 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 	}
 	Screen.Show()
 }
+
+func CharacterSay(in string, tuxX, tuxY, longestPart, yOffset int) (clearFunc func()) {
+	splitLines := strings.Split(in, "\n")
+	for i, x := range splitLines {
+		starter := "  "
+		if i == 0 {
+			starter = "< "
+		}
+		rawPrintString(starter + x, tuxX + longestPart, tuxY + yOffset + i)
+	}
+	Screen.Show()
+	return func() {
+		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestString(splitLines) + 2))
+		for i := 0; i < len(splitLines); i += 1 {
+			rawPrintString(blankString, tuxX + longestPart, tuxY + yOffset + i)
+		}
+		Screen.Show()
+	}
+}
