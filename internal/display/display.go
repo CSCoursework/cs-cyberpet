@@ -2,8 +2,10 @@ package display
 
 import (
 	"fmt"
+	"github.com/codemicro/cs-cyberpet/internal/tools"
 	"github.com/gdamore/tcell"
 	"os"
+	"strings"
 )
 
 const BottomLineHeight = 4
@@ -25,17 +27,22 @@ func init() {
 }
 
 func PrintString(in string, posX, posY int) {
+	rawPrintString(in, posX, posY)
+	Screen.Show()
+}
+
+func rawPrintString(in string, posX, posY int) {
 	if len(in) == 0 {
 		return
 	}
 	Screen.SetContent(posX, posY, rune(in[0]), []rune(in[1:]), 0)
-	Screen.Show()
 }
 
-func PrintMultiLine(in []string, posX, posY int) {
+func PrintMultiString(in []string, posX, posY int) {
 	for i, x := range in {
-		PrintString(x, posX, posY + i)
+		rawPrintString(x, posX, posY + i)
 	}
+	Screen.Show()
 }
 
 func PrintLine(fixedPos int, char rune, isVertical bool) {
