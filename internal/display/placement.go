@@ -3,11 +3,14 @@ package display
 const (
 	infoBoxSizeX = 35
 	infoBoxSizeY = 7
+
+	infoBoxPosX = 2
+	infoBoxPosY = 1
 )
 
 func Scaffold() {
 	_, dispY := Screen.Size()
-	Box(2, 1, 2+infoBoxSizeX, 1+infoBoxSizeY, " STATS ")
+	Box(infoBoxPosX, infoBoxPosY, infoBoxPosX+infoBoxSizeX, infoBoxPosY+infoBoxSizeY, " STATS ")
 	PrintLine(dispY - BottomLineHeight, '─', false)
 	PrintString(">", 0, dispY - BottomLineHeight + 2)
 
