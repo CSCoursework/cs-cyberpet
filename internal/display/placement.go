@@ -1,13 +1,14 @@
 package display
 
-import (
-	"strings"
+const (
+	infoBoxSizeX = 35
+	infoBoxSizeY = 7
 )
 
 func Scaffold() {
 	_, dispY := Screen.Size()
+	Box(2, 1, 2+infoBoxSizeX, 1+infoBoxSizeY, " STATS ")
 	PrintLine(dispY - BottomLineHeight, '─', false)
-
 	PrintString(">", 0, dispY - BottomLineHeight + 2)
 
 }
