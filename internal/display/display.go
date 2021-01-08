@@ -79,9 +79,14 @@ func CharacterSay(in string, characterX, characterY, longestPart, yOffset int) (
 		if i == 0 {
 			starter = "< "
 		}
-		rawPrintString(starter + x, characterX+ longestPart, characterY+ yOffset + i)
+		for ii, char := range starter + x {
+			Screen.ShowCursor(characterX + longestPart + ii + 1, characterY + yOffset + i)
+			rawPrintString(string(char), characterX + longestPart + ii, characterY + yOffset + i)
+			Screen.Show()
+			time.Sleep(time.Millisecond * 50)
+		}
 	}
-	Screen.Show()
+	Screen.HideCursor()
 	return func() {
 		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines) + 2))
 		for i := 0; i < len(splitLines); i += 1 {
