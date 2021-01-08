@@ -2,7 +2,9 @@ package display
 
 import (
 	"errors"
+	"github.com/codemicro/cs-cyberpet/internal/tools"
 	"io"
+	"os"
 )
 
 var ErrorInputTerminated = errors.New("input interrupted")
@@ -56,4 +58,37 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 	}
 
 	return string(inp), nil
+}
+
+func ShowOptions(opts []string) {
+	var outputString string
+	for i, val := range opts {
+		outputString += tools.GetAlphabetChar(i) + ") " + val + "  "
+	}
+	PrintString(outputString, 0, OptionsLineNumber)
+}
+
+func SelectOption(opts []string) (int, string, error) {
+
+	defer func() {
+		PrintLine(OptionsLineNumber, ' ', false)
+		PrintLine(StatusLineNumber, ' ', false)
+	}()
+
+	ShowOptions(opts)
+	PrintString("Select an option", 0, StatusLineNumber)
+
+	optNum := len(opts) + 1
+
+	for optNum > len(opts) || optNum < 0 {
+		inp, err := CollectInputAtPosition(os.Stdin, 2, InputLineNumber, true, 1)
+		if err != nil {
+			return 0, "", err
+		}
+
+		optNum = tools.GetCharNumber(inp)
+		PrintString("Invalid option. Please select another", 0, StatusLineNumber)
+	}
+
+	return optNum, opts[optNum], nil
 }
