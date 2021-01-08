@@ -5,8 +5,6 @@ import (
 	"github.com/codemicro/cs-cyberpet/internal/tools"
 	"github.com/gdamore/tcell"
 	"os"
-	"os/exec"
-	"runtime"
 	"strings"
 )
 
@@ -78,15 +76,4 @@ func CharacterSay(in string, characterX, characterY, longestPart, yOffset int) (
 		}
 		Screen.Show()
 	}
-}
-
-func ClearConsole() {
-	var cmd *exec.Cmd
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("cmd", "/c", "cls")
-	} else {
-		cmd = exec.Command("clear")
-	}
-	cmd.Stdout = os.Stdout
-	_ = cmd.Run()
 }
