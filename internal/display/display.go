@@ -57,19 +57,7 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 		totalLen = xs
 		y = fixedPos
 	}
-	modPos := func(i int) int {
-
-		if isVertical {
-			y += 1
-		} else {
-			x += 1
-		}
-
-		return i + 1
-	}
-	for i := 0; i < totalLen; i = modPos(i) {
-		Screen.SetContent(x, y, char, nil, 0)
-	}
+	Screen.SetContent(x, y, char, tools.MakeRuneSlice(char, totalLen - 1), 0)
 	Screen.Show()
 }
 
