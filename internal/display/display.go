@@ -6,11 +6,18 @@ import (
 	"github.com/gdamore/tcell"
 	"os"
 	"strings"
+	"time"
 )
 
 const BottomLineHeight = 4
 
-var Screen tcell.Screen
+var (
+	Screen tcell.Screen
+
+	StatusLineNumber int
+	InputLineNumber int
+	OptionsLineNumber int
+)
 
 func init() {
 	var err error
@@ -24,6 +31,12 @@ func init() {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to initialise tcell Screen: %s", err.Error())
 		os.Exit(1)
 	}
+
+	_, dimY := Screen.Size()
+	StatusLineNumber = dimY - BottomLineHeight + 1
+	OptionsLineNumber = dimY - BottomLineHeight + 2
+	InputLineNumber = dimY - BottomLineHeight + 3
+
 }
 
 func PrintString(in string, posX, posY int) {

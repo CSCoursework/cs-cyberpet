@@ -34,7 +34,7 @@ func Scaffold(character []string) {
 
 	Box(infoBoxPosX, infoBoxPosY, infoBoxPosX+infoBoxSizeX, infoBoxPosY+infoBoxSizeY, " STATS ")
 	PrintLine(screenY- BottomLineHeight, '─', false)
-	PrintString(">", 0, screenY- BottomLineHeight + 2)
+	PrintString(">", 0, InputLineNumber)
 
 }
 
