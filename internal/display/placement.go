@@ -2,6 +2,7 @@ package display
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
+	"github.com/codemicro/cs-cyberpet/internal/textart"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
 )
 
@@ -13,6 +14,10 @@ const (
 var (
 	infoBoxSizeX int
 	infoBoxSizeY int
+
+	CharacterXPos  int
+	CharacterYPos  int
+	LongestCharacterSection int
 )
 
 func init() {
@@ -20,11 +25,16 @@ func init() {
 	infoBoxSizeY = len(pet.DefaultPetStats) + 1 // plus one compensating for the top bottom border
 }
 
-func Scaffold() {
-	_, dispY := Screen.Size()
+func Scaffold(character []string) {
+	screenX, screenY := Screen.Size()
+
+	LongestCharacterSection = tools.FindLongestStringLen(textart.Tux)
+	CharacterXPos, CharacterYPos = FindTopLeftCoord(LongestCharacterSection, len(textart.Tux), screenX, screenY-BottomLineHeight)
+	PrintMultiString(character, CharacterXPos, CharacterYPos)
+
 	Box(infoBoxPosX, infoBoxPosY, infoBoxPosX+infoBoxSizeX, infoBoxPosY+infoBoxSizeY, " STATS ")
-	PrintLine(dispY - BottomLineHeight, '─', false)
-	PrintString(">", 0, dispY - BottomLineHeight + 2)
+	PrintLine(screenY- BottomLineHeight, '─', false)
+	PrintString(">", 0, screenY- BottomLineHeight + 2)
 
 }
 
