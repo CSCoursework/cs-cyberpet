@@ -23,3 +23,11 @@ func RightPadString(in string, newLen int, pad rune) string {
 	}
 	return in
 }
+
+func GetAlphabetChar(i int) string {
+	return string(rune(int('a') + i))
+}
+
+func GetCharNumber(i string) int {
+	return int([]rune(i)[0]) - int('a')
+}
