@@ -3,6 +3,7 @@ package display
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
+	"time"
 )
 
 const (
@@ -32,4 +33,14 @@ func UpdateStats(petInfo *pet.Pet) {
 	petInfo.StatLock.RUnlock()
 
 	Screen.Show()
+}
+
+func StartStatLoop(pt *pet.Pet) {
+	UpdateStats(pt)
+	go func(pt *pet.Pet) {
+		for {
+			UpdateStats(pt)
+			time.Sleep(pet.StatUpdateInterval)
+		}
+	}(pt)
 }
