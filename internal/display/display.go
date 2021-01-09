@@ -14,8 +14,8 @@ const BottomLineHeight = 4
 var (
 	Screen tcell.Screen
 
-	StatusLineNumber int
-	InputLineNumber int
+	StatusLineNumber  int
+	InputLineNumber   int
 	OptionsLineNumber int
 )
 
@@ -58,7 +58,7 @@ func rawPrintString(in string, posX, posY int) {
 
 func PrintMultiString(in []string, posX, posY int) {
 	for i, x := range in {
-		rawPrintString(x, posX, posY + i)
+		rawPrintString(x, posX, posY+i)
 	}
 	Screen.Show()
 }
@@ -73,7 +73,7 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 		totalLen = xs
 		y = fixedPos
 	}
-	Screen.SetContent(x, y, char, tools.MakeRuneSlice(char, totalLen - 1), tcell.StyleDefault)
+	Screen.SetContent(x, y, char, tools.MakeRuneSlice(char, totalLen-1), tcell.StyleDefault)
 	Screen.Show()
 }
 
@@ -85,17 +85,17 @@ func CharacterSay(in string, yOffset, xOffset int) (clearFunc func()) {
 			starter = "< "
 		}
 		for ii, char := range starter + x {
-			Screen.ShowCursor(CharacterXPos + LongestCharacterSection + xOffset + ii + 1, CharacterYPos + yOffset + i)
-			rawPrintString(string(char), CharacterXPos + LongestCharacterSection + xOffset + ii, CharacterYPos + yOffset + i)
+			Screen.ShowCursor(CharacterXPos+LongestCharacterSection+xOffset+ii+1, CharacterYPos+yOffset+i)
+			rawPrintString(string(char), CharacterXPos+LongestCharacterSection+xOffset+ii, CharacterYPos+yOffset+i)
 			Screen.Show()
 			time.Sleep(time.Millisecond * 50)
 		}
 	}
 	Screen.HideCursor()
 	return func() {
-		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines) + 2))
+		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines)+2))
 		for i := 0; i < len(splitLines); i += 1 {
-			rawPrintString(blankString, CharacterXPos + LongestCharacterSection + xOffset, CharacterYPos + yOffset + i)
+			rawPrintString(blankString, CharacterXPos+LongestCharacterSection+xOffset, CharacterYPos+yOffset+i)
 		}
 		Screen.Show()
 	}

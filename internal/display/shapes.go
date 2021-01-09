@@ -6,10 +6,10 @@ import (
 )
 
 const (
-	tlChar = '┌'
-	trChar = '┐'
-	brChar = '┘'
-	blChar = '└'
+	tlChar   = '┌'
+	trChar   = '┐'
+	brChar   = '┘'
+	blChar   = '└'
 	vertChar = '│'
 	horiChar = '─'
 )
@@ -24,17 +24,17 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	height := bottomRightY - topLeftY
 
 	var (
-		topLine []rune
+		topLine    []rune
 		bottomLine []rune
 
-		leftLine []rune
+		leftLine  []rune
 		rightLine []rune
 	)
 
 	// generate some lines for the box
 
 	{
-		rs := tools.MakeRuneSlice(horiChar, width + 1)
+		rs := tools.MakeRuneSlice(horiChar, width+1)
 
 		topLine = make([]rune, len(rs))
 		bottomLine = make([]rune, len(rs))
@@ -44,17 +44,17 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 		// add corner sections
 
 		topLine[0] = tlChar
-		topLine[len(topLine) - 1] = trChar
+		topLine[len(topLine)-1] = trChar
 		for i, v := range title {
-			topLine[i + 1] = v
+			topLine[i+1] = v
 		}
 
 		bottomLine[0] = blChar
-		bottomLine[len(bottomLine) - 1] = brChar
+		bottomLine[len(bottomLine)-1] = brChar
 	}
 
 	{
-		rs := tools.MakeRuneSlice(vertChar, height - 1) // -1 to allow for the top and bottom line
+		rs := tools.MakeRuneSlice(vertChar, height-1) // -1 to allow for the top and bottom line
 
 		leftLine = make([]rune, len(rs))
 		rightLine = make([]rune, len(rs))
@@ -68,10 +68,10 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	Screen.SetContent(topLeftX, bottomRightY, bottomLine[0], bottomLine[1:], tcell.StyleDefault)
 
 	for i, v := range leftLine {
-		Screen.SetContent(topLeftX, topLeftY + 1 + i, v, nil, tcell.StyleDefault)
+		Screen.SetContent(topLeftX, topLeftY+1+i, v, nil, tcell.StyleDefault)
 	}
 
 	for i, v := range rightLine {
-		Screen.SetContent(bottomRightX, topLeftY + 1 + i, v, nil, tcell.StyleDefault)
+		Screen.SetContent(bottomRightX, topLeftY+1+i, v, nil, tcell.StyleDefault)
 	}
 }

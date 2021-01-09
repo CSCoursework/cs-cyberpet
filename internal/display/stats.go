@@ -33,7 +33,7 @@ func UpdateStats(petInfo *pet.Pet) {
 		asRunes = append(asRunes, tools.MakeRuneSlice(fullBlock, numBlocks)...)
 		asRunes = append(asRunes, tools.MakeRuneSlice(emptyBlock, numSpaces)...)
 
-		Screen.SetContent(infoBoxPosX + 2, lineNum, asRunes[0], asRunes[1:], tcell.StyleDefault)
+		Screen.SetContent(infoBoxPosX+2, lineNum, asRunes[0], asRunes[1:], tcell.StyleDefault)
 	}
 
 	petInfo.StatLock.RUnlock()

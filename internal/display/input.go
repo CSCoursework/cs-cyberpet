@@ -35,13 +35,13 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 
 		if buf[0] == 8 { // backspace
 			if len(inp) != 0 {
-				inp = inp[:len(inp) - 1]
+				inp = inp[:len(inp)-1]
 				Screen.SetContent(posX+len(inp), posY, ' ', nil, tcell.StyleDefault)
 			}
 		} else {
 			if limit == 0 || len(inp) < limit {
 				inp = append(inp, buf[0])
-				Screen.SetContent(posX+len(inp) - 1, posY, rune(buf[0]), nil, tcell.StyleDefault)
+				Screen.SetContent(posX+len(inp)-1, posY, rune(buf[0]), nil, tcell.StyleDefault)
 			}
 		}
 

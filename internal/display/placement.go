@@ -15,8 +15,8 @@ var (
 	infoBoxSizeX int
 	infoBoxSizeY int
 
-	CharacterXPos  int
-	CharacterYPos  int
+	CharacterXPos           int
+	CharacterYPos           int
 	LongestCharacterSection int
 
 	ClearCurrentCharacter func()
@@ -24,7 +24,7 @@ var (
 
 func init() {
 	infoBoxSizeX = tools.FindLongestStringLen(pet.StatNames) + 4 + statTickerLen // plus four compensates for weird spacing
-	infoBoxSizeY = len(pet.DefaultPetStats) + 1 // plus one compensating for the top bottom border
+	infoBoxSizeY = len(pet.DefaultPetStats) + 1                                  // plus one compensating for the top bottom border
 }
 
 func Scaffold() {
@@ -33,7 +33,7 @@ func Scaffold() {
 	ShowCharacterInCenter(textart.Tux)
 
 	Box(infoBoxPosX, infoBoxPosY, infoBoxPosX+infoBoxSizeX, infoBoxPosY+infoBoxSizeY, " STATS ")
-	PrintLine(screenY- BottomLineHeight, '─', false)
+	PrintLine(screenY-BottomLineHeight, '─', false)
 	PrintString(">", 0, InputLineNumber)
 }
 
@@ -48,7 +48,7 @@ func ShowCharacterInCenter(character []string) {
 	ClearCurrentCharacter = func() {
 		blankString := string(tools.MakeRuneSlice(' ', LongestCharacterSection))
 		for i := 0; i < len(character); i += 1 {
-			rawPrintString(blankString, CharacterXPos, CharacterYPos+ i)
+			rawPrintString(blankString, CharacterXPos, CharacterYPos+i)
 		}
 		Screen.Show()
 	}

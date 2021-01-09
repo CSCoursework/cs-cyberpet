@@ -13,8 +13,8 @@ var (
 		{Name: "Hunger", Value: 0, Delta: 2},
 		{Name: "Fatigue", Value: 0, Delta: 2},
 	}
-	StatNames []string
-	StatUpdateInterval = time.Second * 5
+	StatNames          []string
+	StatUpdateInterval = time.Second / 2
 
 	CurrentPet *Pet
 )
@@ -26,20 +26,20 @@ func init() {
 }
 
 type Pet struct {
-	Name string
+	Name   string
 	IsDead bool
 
-	StatLock *sync.RWMutex
-	Stats []*Stat
+	StatLock           *sync.RWMutex
+	Stats              []*Stat
 	StatUpdateNotifier chan bool
 }
 
 func NewPet(name string) *Pet {
 
 	p := &Pet{
-		Name:    name,
-		StatLock: new(sync.RWMutex),
-		Stats: DefaultPetStats,
+		Name:               name,
+		StatLock:           new(sync.RWMutex),
+		Stats:              DefaultPetStats,
 		StatUpdateNotifier: make(chan bool),
 	}
 
@@ -102,7 +102,7 @@ func NewPet(name string) *Pet {
 }
 
 type Stat struct {
-	Name string
+	Name  string
 	Value int
 	Delta int
 }
