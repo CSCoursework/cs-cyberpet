@@ -8,6 +8,7 @@ import (
 
 const (
 	fullBlock     = '█'
+	emptyBlock    = ' '
 	statTickerLen = 20
 )
 
@@ -25,7 +26,9 @@ func UpdateStats(petInfo *pet.Pet) {
 
 		// make indicator tape
 		numBlocks := stat.Value / (100 / statTickerLen)
+		numSpaces := statTickerLen - numBlocks
 		asRunes = append(asRunes, tools.MakeRuneSlice(fullBlock, numBlocks)...)
+		asRunes = append(asRunes, tools.MakeRuneSlice(emptyBlock, numSpaces)...)
 
 		Screen.SetContent(infoBoxPosX + 2, lineNum, asRunes[0], asRunes[1:], tcell.StyleDefault)
 	}
