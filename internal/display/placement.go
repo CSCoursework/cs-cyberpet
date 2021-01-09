@@ -39,7 +39,6 @@ func Scaffold() {
 
 func ShowCharacterInCenter(character []string) {
 
-	// This depends on a few global variables, so we need to call it before we update them
 	if ClearCurrentCharacter != nil {
 		ClearCurrentCharacter()
 	}
@@ -49,14 +48,26 @@ func ShowCharacterInCenter(character []string) {
 	CharacterXPos = (screenX - LongestCharacterSection) / 2
 	CharacterYPos = (screenY - len(character)) / 2
 
-
-	PrintMultiString(character, CharacterXPos, CharacterYPos)
+	PrintTransparentMultiString(character, CharacterXPos, CharacterYPos)
 
 	ClearCurrentCharacter = func() {
-		blankRunes := tools.MakeRuneSlice(' ', LongestCharacterSection)
-		for i := 0; i < len(character); i += 1 {
-			rawPrintRunes(blankRunes, CharacterXPos, CharacterYPos+i)
+		displayLock.Lock()
+		for i, line := range character {
+
+			// count number of spaces before first character
+			var alignmentSpaces int
+			for ii, char := range line {
+				if char != ' ' {
+					alignmentSpaces = ii
+					break
+				}
+			}
+			// make rune array of spaces that is representative of the amount of non-alignment spaces in the text art
+			blankRunes := tools.MakeRuneSlice(' ', len(line) - alignmentSpaces)
+			// print this rune array at the specified offset
+			rawPrintRunes(blankRunes, CharacterXPos+alignmentSpaces, CharacterYPos+i)
 		}
 		Screen.Show()
+		displayLock.Unlock()
 	}
 }

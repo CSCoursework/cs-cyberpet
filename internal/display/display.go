@@ -69,10 +69,32 @@ func rawPrintRunes(in []rune, posX, posY int) {
 	}
 }
 
+func rawTransparentPrintString(in string, posX, posY int) {
+	rawTransparentPrintRunes([]rune(in), posX, posY)
+}
+
+func rawTransparentPrintRunes(in []rune, posX, posY int) {
+	if len(in) == 0 {
+		return
+	}
+	for i, char := range in {
+		Screen.SetContent(posX+i, posY, char, nil, tcell.StyleDefault)
+	}
+}
+
 func PrintMultiString(in []string, posX, posY int) {
 	displayLock.Lock()
 	for i, x := range in {
 		rawPrintString(x, posX, posY+i)
+	}
+	Screen.Show()
+	displayLock.Unlock()
+}
+
+func PrintTransparentMultiString(in []string, posX, posY int) {
+	displayLock.Lock()
+	for i, x := range in {
+		rawTransparentPrintString(x, posX, posY+i)
 	}
 	Screen.Show()
 	displayLock.Unlock()
