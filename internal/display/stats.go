@@ -2,8 +2,11 @@ package display
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
+	"github.com/codemicro/cs-cyberpet/internal/textart"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
 	"github.com/gdamore/tcell/v2"
+	"os"
+	"time"
 )
 
 const (
@@ -44,5 +47,16 @@ func StartStatLoop(pt *pet.Pet) {
 		for <-pt.StatUpdateNotifier {
 			UpdateStats(pt)
 		}
+
+		ClearCurrentCharacter()
+		ShowCharacterInCenter(textart.Gravestone)
+
+		CharacterSay("oops, I died", 3, 3)
+
+		time.Sleep(time.Second * 2)
+
+		BeforeShutdown()
+		os.Exit(0)
+
 	}(pt)
 }
