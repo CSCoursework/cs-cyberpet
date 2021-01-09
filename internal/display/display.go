@@ -39,6 +39,11 @@ func init() {
 
 }
 
+func BeforeShutdown() {
+	Screen.Clear()
+	Screen.Fini()
+}
+
 func PrintString(in string, posX, posY int) {
 	rawPrintString(in, posX, posY)
 	Screen.Show()
