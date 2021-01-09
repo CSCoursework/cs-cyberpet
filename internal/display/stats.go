@@ -41,9 +41,8 @@ func UpdateStats(petInfo *pet.Pet) {
 func StartStatLoop(pt *pet.Pet) {
 	UpdateStats(pt)
 	go func(pt *pet.Pet) {
-		for {
+		for <-pt.StatUpdateNotifier {
 			UpdateStats(pt)
-			time.Sleep(pet.StatUpdateInterval)
 		}
 	}(pt)
 }
