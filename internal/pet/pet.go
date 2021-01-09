@@ -34,6 +34,52 @@ type Pet struct {
 	StatUpdateNotifier chan bool
 }
 
+type Stat struct {
+	Name  string
+	Value int
+	Delta int
+}
+
+func (p *Pet) FixStats() {
+	for _, stat := range p.Stats {
+		nv := stat.Value
+		if nv > 100 {
+			nv = 100
+		} else if nv < 0 {
+			nv = 0
+		}
+		stat.Value = nv
+	}
+}
+
+func (p *Pet) modval(sname string, modfunc func(int) int) {
+	p.StatLock.Lock()
+	defer func() {
+		p.FixStats()
+		p.StatLock.Unlock()
+		p.StatUpdateNotifier <- true
+	}()
+	for _, stat := range p.Stats {
+		if strings.EqualFold(stat.Name, sname) {
+			stat.Value = modfunc(stat.Value)
+			return
+		}
+	}
+	panic(errors.New("modval: specified value not found"))
+}
+
+func (p *Pet) SetStat(sname string, val int) {
+	p.modval(sname, func(_ int) int {
+		return val
+	})
+}
+
+func (p *Pet) SetStatDelta(sname string, delta int) {
+	p.modval(sname, func(x int) int {
+		return x + delta
+	})
+}
+
 func NewPet(name string) *Pet {
 
 	p := &Pet{
@@ -99,10 +145,4 @@ func NewPet(name string) *Pet {
 	}()
 
 	return p
-}
-
-type Stat struct {
-	Name  string
-	Value int
-	Delta int
 }
