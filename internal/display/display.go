@@ -72,7 +72,7 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 	Screen.Show()
 }
 
-func CharacterSay(in string, characterX, characterY, longestPart, yOffset int) (clearFunc func()) {
+func CharacterSay(in string, yOffset, xOffset int) (clearFunc func()) {
 	splitLines := strings.Split(in, "\n")
 	for i, x := range splitLines {
 		starter := "  "
@@ -80,8 +80,8 @@ func CharacterSay(in string, characterX, characterY, longestPart, yOffset int) (
 			starter = "< "
 		}
 		for ii, char := range starter + x {
-			Screen.ShowCursor(characterX + longestPart + ii + 1, characterY + yOffset + i)
-			rawPrintString(string(char), characterX + longestPart + ii, characterY + yOffset + i)
+			Screen.ShowCursor(CharacterXPos + LongestCharacterSection + xOffset + ii + 1, CharacterYPos + yOffset + i)
+			rawPrintString(string(char), CharacterXPos + LongestCharacterSection + xOffset + ii, CharacterYPos + yOffset + i)
 			Screen.Show()
 			time.Sleep(time.Millisecond * 50)
 		}
@@ -90,7 +90,7 @@ func CharacterSay(in string, characterX, characterY, longestPart, yOffset int) (
 	return func() {
 		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines) + 2))
 		for i := 0; i < len(splitLines); i += 1 {
-			rawPrintString(blankString, characterX+ longestPart, characterY+ yOffset + i)
+			rawPrintString(blankString, CharacterXPos + LongestCharacterSection + xOffset, CharacterYPos + yOffset + i)
 		}
 		Screen.Show()
 	}
