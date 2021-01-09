@@ -38,14 +38,17 @@ func Scaffold() {
 }
 
 func ShowCharacterInCenter(character []string) {
+
+	// This depends on a few global variables, so we need to call it before we update them
+	if ClearCurrentCharacter != nil {
+		ClearCurrentCharacter()
+	}
+
 	LongestCharacterSection = tools.FindLongestStringLen(character)
 	screenX, screenY := Screen.Size()
 	CharacterXPos = (screenX - LongestCharacterSection) / 2
 	CharacterYPos = (screenY - len(character)) / 2
 
-	if ClearCurrentCharacter != nil {
-		ClearCurrentCharacter()
-	}
 
 	PrintMultiString(character, CharacterXPos, CharacterYPos)
 
