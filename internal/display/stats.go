@@ -3,7 +3,7 @@ package display
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
-	"time"
+	"github.com/gdamore/tcell/v2"
 )
 
 const (
@@ -27,7 +27,7 @@ func UpdateStats(petInfo *pet.Pet) {
 		numBlocks := stat.Value / (100 / statTickerLen)
 		asRunes = append(asRunes, tools.MakeRuneSlice(fullBlock, numBlocks)...)
 
-		Screen.SetContent(infoBoxPosX + 2, lineNum, asRunes[0], asRunes[1:], 0)
+		Screen.SetContent(infoBoxPosX + 2, lineNum, asRunes[0], asRunes[1:], tcell.StyleDefault)
 	}
 
 	petInfo.StatLock.RUnlock()

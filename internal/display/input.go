@@ -3,6 +3,7 @@ package display
 import (
 	"errors"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
+	"github.com/gdamore/tcell/v2"
 	"io"
 	"os"
 )
@@ -35,12 +36,12 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 		if buf[0] == 8 { // backspace
 			if len(inp) != 0 {
 				inp = inp[:len(inp) - 1]
-				Screen.SetContent(posX+len(inp), posY, ' ', nil, 0)
+				Screen.SetContent(posX+len(inp), posY, ' ', nil, tcell.StyleDefault)
 			}
 		} else {
 			if limit == 0 || len(inp) < limit {
 				inp = append(inp, buf[0])
-				Screen.SetContent(posX+len(inp) - 1, posY, rune(buf[0]), nil, 0)
+				Screen.SetContent(posX+len(inp) - 1, posY, rune(buf[0]), nil, tcell.StyleDefault)
 			}
 		}
 
@@ -53,7 +54,7 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 		for i := 1; i < len(inp); i += 1 {
 			runeBuf = append(runeBuf, ' ')
 		}
-		Screen.SetContent(startX, posY, ' ', runeBuf, 0)
+		Screen.SetContent(startX, posY, ' ', runeBuf, tcell.StyleDefault)
 		Screen.Show()
 	}
 

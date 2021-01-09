@@ -2,6 +2,7 @@ package display
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/tools"
+	"github.com/gdamore/tcell/v2"
 )
 
 const (
@@ -63,14 +64,14 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 
 	// place these lines
 
-	Screen.SetContent(topLeftX, topLeftY, topLine[0], topLine[1:], 0)
-	Screen.SetContent(topLeftX, bottomRightY, bottomLine[0], bottomLine[1:], 0)
+	Screen.SetContent(topLeftX, topLeftY, topLine[0], topLine[1:], tcell.StyleDefault)
+	Screen.SetContent(topLeftX, bottomRightY, bottomLine[0], bottomLine[1:], tcell.StyleDefault)
 
 	for i, v := range leftLine {
-		Screen.SetContent(topLeftX, topLeftY + 1 + i, v, nil, 0)
+		Screen.SetContent(topLeftX, topLeftY + 1 + i, v, nil, tcell.StyleDefault)
 	}
 
 	for i, v := range rightLine {
-		Screen.SetContent(bottomRightX, topLeftY + 1 + i, v, nil, 0)
+		Screen.SetContent(bottomRightX, topLeftY + 1 + i, v, nil, tcell.StyleDefault)
 	}
 }
