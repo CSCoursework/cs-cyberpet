@@ -18,6 +18,8 @@ var (
 	CharacterXPos  int
 	CharacterYPos  int
 	LongestCharacterSection int
+
+	ClearCurrentCharacter func()
 )
 
 func init() {
@@ -25,21 +27,29 @@ func init() {
 	infoBoxSizeY = len(pet.DefaultPetStats) + 1 // plus one compensating for the top bottom border
 }
 
-func Scaffold(character []string) {
-	screenX, screenY := Screen.Size()
+func Scaffold() {
+	_, screenY := Screen.Size()
 
-	LongestCharacterSection = tools.FindLongestStringLen(textart.Tux)
-	CharacterXPos, CharacterYPos = FindTopLeftCoord(LongestCharacterSection, len(textart.Tux), screenX, screenY-BottomLineHeight)
-	PrintMultiString(character, CharacterXPos, CharacterYPos)
+	ShowCharacterInCenter(textart.Tux)
 
 	Box(infoBoxPosX, infoBoxPosY, infoBoxPosX+infoBoxSizeX, infoBoxPosY+infoBoxSizeY, " STATS ")
 	PrintLine(screenY- BottomLineHeight, '─', false)
 	PrintString(">", 0, InputLineNumber)
-
 }
 
-func FindTopLeftCoord(imgX, imgY, sizeX, sizeY int) (int, int) {
-	remX := sizeX - imgX
-	remY := sizeY - imgY
-	return remX / 2, remY / 2
+func ShowCharacterInCenter(character []string) {
+	LongestCharacterSection = tools.FindLongestStringLen(character)
+	screenX, screenY := Screen.Size()
+	CharacterXPos = (screenX - LongestCharacterSection) / 2
+	CharacterYPos = (screenY - len(character)) / 2
+
+	PrintMultiString(character, CharacterXPos, CharacterYPos)
+
+	ClearCurrentCharacter = func() {
+		blankString := string(tools.MakeRuneSlice(' ', LongestCharacterSection))
+		for i := 0; i < len(character); i += 1 {
+			rawPrintString(blankString, CharacterXPos, CharacterYPos+ i)
+		}
+		Screen.Show()
+	}
 }
