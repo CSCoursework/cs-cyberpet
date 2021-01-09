@@ -43,6 +43,10 @@ func ShowCharacterInCenter(character []string) {
 	CharacterXPos = (screenX - LongestCharacterSection) / 2
 	CharacterYPos = (screenY - len(character)) / 2
 
+	if ClearCurrentCharacter != nil {
+		ClearCurrentCharacter()
+	}
+
 	PrintMultiString(character, CharacterXPos, CharacterYPos)
 
 	ClearCurrentCharacter = func() {
