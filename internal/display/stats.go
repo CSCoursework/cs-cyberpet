@@ -19,6 +19,7 @@ func UpdateStats(petInfo *pet.Pet) {
 
 	longestStatNameLen := tools.FindLongestStringLen(pet.StatNames) + 2 // adding two adds a gap between the label and the ticker bar
 
+	displayLock.Lock()
 	petInfo.StatLock.RLock()
 
 	for i, stat := range petInfo.Stats {
@@ -39,6 +40,7 @@ func UpdateStats(petInfo *pet.Pet) {
 	petInfo.StatLock.RUnlock()
 
 	Screen.Show()
+	displayLock.Unlock()
 }
 
 func StartStatLoop(pt *pet.Pet) {

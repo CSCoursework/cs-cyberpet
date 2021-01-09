@@ -15,8 +15,10 @@ const (
 )
 
 func Box(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
+	displayLock.Lock()
 	rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY, title)
 	Screen.Show()
+	displayLock.Unlock()
 }
 
 func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {

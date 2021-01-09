@@ -33,6 +33,7 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 			return "", ErrorInputTerminated
 		}
 
+		displayLock.Lock()
 		if buf[0] == 8 { // backspace
 			if len(inp) != 0 {
 				inp = inp[:len(inp)-1]
@@ -47,6 +48,7 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 
 		Screen.ShowCursor(posX+len(inp), posY)
 		Screen.Show()
+		displayLock.Unlock()
 	}
 
 	if clearAfter {
@@ -54,8 +56,10 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 		for i := 1; i < len(inp); i += 1 {
 			runeBuf = append(runeBuf, ' ')
 		}
+		displayLock.Lock()
 		Screen.SetContent(startX, posY, ' ', runeBuf, tcell.StyleDefault)
 		Screen.Show()
+		displayLock.Unlock()
 	}
 
 	return string(inp), nil

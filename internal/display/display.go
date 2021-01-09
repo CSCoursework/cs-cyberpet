@@ -6,6 +6,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"os"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -17,6 +18,8 @@ var (
 	StatusLineNumber  int
 	InputLineNumber   int
 	OptionsLineNumber int
+
+	displayLock sync.Mutex
 )
 
 func init() {
@@ -40,13 +43,17 @@ func init() {
 }
 
 func BeforeShutdown() {
+	displayLock.Lock()
 	Screen.Clear()
 	Screen.Fini()
+	displayLock.Unlock()
 }
 
 func PrintString(in string, posX, posY int) {
+	displayLock.Lock()
 	rawPrintString(in, posX, posY)
 	Screen.Show()
+	displayLock.Unlock()
 }
 
 func rawPrintString(in string, posX, posY int) {
@@ -57,13 +64,16 @@ func rawPrintString(in string, posX, posY int) {
 }
 
 func PrintMultiString(in []string, posX, posY int) {
+	displayLock.Lock()
 	for i, x := range in {
 		rawPrintString(x, posX, posY+i)
 	}
 	Screen.Show()
+	displayLock.Unlock()
 }
 
 func PrintLine(fixedPos int, char rune, isVertical bool) {
+	displayLock.Lock()
 	var x, y, totalLen int
 	xs, ys := Screen.Size()
 	if isVertical {
@@ -75,9 +85,11 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 	}
 	Screen.SetContent(x, y, char, tools.MakeRuneSlice(char, totalLen-1), tcell.StyleDefault)
 	Screen.Show()
+	displayLock.Unlock()
 }
 
 func CharacterSay(in string, yOffset, xOffset int) (clearFunc func()) {
+	displayLock.Lock()
 	splitLines := strings.Split(in, "\n")
 	for i, x := range splitLines {
 		starter := "  "
@@ -92,11 +104,14 @@ func CharacterSay(in string, yOffset, xOffset int) (clearFunc func()) {
 		}
 	}
 	Screen.HideCursor()
+	displayLock.Unlock()
 	return func() {
+		displayLock.Lock()
 		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines)+2))
 		for i := 0; i < len(splitLines); i += 1 {
 			rawPrintString(blankString, CharacterXPos+LongestCharacterSection+xOffset, CharacterYPos+yOffset+i)
 		}
 		Screen.Show()
+		displayLock.Unlock()
 	}
 }
