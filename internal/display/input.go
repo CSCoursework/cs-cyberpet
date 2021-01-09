@@ -52,12 +52,8 @@ func CollectInputAtPosition(reader io.Reader, posX, posY int, clearAfter bool, l
 	}
 
 	if clearAfter {
-		var runeBuf []rune
-		for i := 1; i < len(inp); i += 1 {
-			runeBuf = append(runeBuf, ' ')
-		}
 		displayLock.Lock()
-		Screen.SetContent(startX, posY, ' ', runeBuf, tcell.StyleDefault)
+		rawPrintRunes(tools.MakeRuneSlice(' ', len(inp)), startX, posY)
 		Screen.Show()
 		displayLock.Unlock()
 	}

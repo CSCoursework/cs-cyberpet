@@ -50,9 +50,9 @@ func ShowCharacterInCenter(character []string) {
 	PrintMultiString(character, CharacterXPos, CharacterYPos)
 
 	ClearCurrentCharacter = func() {
-		blankString := string(tools.MakeRuneSlice(' ', LongestCharacterSection))
+		blankRunes := tools.MakeRuneSlice(' ', LongestCharacterSection)
 		for i := 0; i < len(character); i += 1 {
-			rawPrintString(blankString, CharacterXPos, CharacterYPos+i)
+			rawPrintRunes(blankRunes, CharacterXPos, CharacterYPos+i)
 		}
 		Screen.Show()
 	}

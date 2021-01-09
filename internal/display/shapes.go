@@ -66,8 +66,8 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 
 	// place these lines
 
-	Screen.SetContent(topLeftX, topLeftY, topLine[0], topLine[1:], tcell.StyleDefault)
-	Screen.SetContent(topLeftX, bottomRightY, bottomLine[0], bottomLine[1:], tcell.StyleDefault)
+	rawPrintRunes(topLine, topLeftX, topLeftY)
+	rawPrintRunes(bottomLine, topLeftX, bottomRightY)
 
 	for i, v := range leftLine {
 		Screen.SetContent(topLeftX, topLeftY+1+i, v, nil, tcell.StyleDefault)

@@ -57,10 +57,16 @@ func PrintString(in string, posX, posY int) {
 }
 
 func rawPrintString(in string, posX, posY int) {
+	rawPrintRunes([]rune(in), posX, posY)
+}
+
+func rawPrintRunes(in []rune, posX, posY int) {
 	if len(in) == 0 {
 		return
 	}
-	Screen.SetContent(posX, posY, rune(in[0]), []rune(in[1:]), tcell.StyleDefault)
+	for i, char := range in {
+		Screen.SetContent(posX+i, posY, char, nil, tcell.StyleDefault)
+	}
 }
 
 func PrintMultiString(in []string, posX, posY int) {
@@ -83,7 +89,7 @@ func PrintLine(fixedPos int, char rune, isVertical bool) {
 		totalLen = xs
 		y = fixedPos
 	}
-	Screen.SetContent(x, y, char, tools.MakeRuneSlice(char, totalLen-1), tcell.StyleDefault)
+	rawPrintRunes(tools.MakeRuneSlice(char, totalLen), x, y)
 	Screen.Show()
 	displayLock.Unlock()
 }
@@ -107,9 +113,9 @@ func CharacterSay(in string, yOffset, xOffset int) (clearFunc func()) {
 	displayLock.Unlock()
 	return func() {
 		displayLock.Lock()
-		blankString := string(tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines)+2))
+		blankString := tools.MakeRuneSlice(' ', tools.FindLongestStringLen(splitLines)+2)
 		for i := 0; i < len(splitLines); i += 1 {
-			rawPrintString(blankString, CharacterXPos+LongestCharacterSection+xOffset, CharacterYPos+yOffset+i)
+			rawPrintRunes(blankString, CharacterXPos+LongestCharacterSection+xOffset, CharacterYPos+yOffset+i)
 		}
 		Screen.Show()
 		displayLock.Unlock()
