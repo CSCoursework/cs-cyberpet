@@ -49,7 +49,6 @@ func StartStatLoop(pt *pet.Pet) {
 			UpdateStats(pt)
 		}
 
-		ClearCurrentCharacter()
 		ShowCharacterInCenter(textart.Gravestone)
 
 		CharacterSay("oops, I died", 3, 3)
