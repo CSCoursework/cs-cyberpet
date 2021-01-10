@@ -78,7 +78,9 @@ func rawTransparentPrintRunes(in []rune, posX, posY int) {
 		return
 	}
 	for i, char := range in {
-		Screen.SetContent(posX+i, posY, char, nil, tcell.StyleDefault)
+		if char != ' ' {
+			Screen.SetContent(posX+i, posY, char, nil, tcell.StyleDefault)
+		}
 	}
 }
 
