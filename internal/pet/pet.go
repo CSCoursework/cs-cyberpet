@@ -1,6 +1,8 @@
 package pet
 
 import (
+	"errors"
+	"strings"
 	"sync"
 	"time"
 )
