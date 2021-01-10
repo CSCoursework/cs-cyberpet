@@ -3,6 +3,7 @@ package game
 import (
 	"errors"
 	"github.com/codemicro/cs-cyberpet/internal/display"
+	"github.com/codemicro/cs-cyberpet/internal/game/minigame"
 	"github.com/codemicro/cs-cyberpet/internal/pet"
 	"github.com/codemicro/cs-cyberpet/internal/textart"
 	"math/rand"
@@ -53,6 +54,7 @@ func Play() {
 				// TODO: Minigame. Tictactoe or something?
 
 				cf := display.CharacterSay("wheee such fun", 3, 0)
+				minigame.Tictactoe()
 				time.Sleep(time.Second * 2)
 				pet.CurrentPet.SetStatDelta("Boredom", -20)
 				cf()
