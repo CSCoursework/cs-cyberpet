@@ -54,25 +54,38 @@ func Play() {
 
 				cf := display.CharacterSay("wheee such fun", 3, 0)
 				time.Sleep(time.Second * 2)
-
-				pet.CurrentPet.SetStat("Boredom", -20)
-
+				pet.CurrentPet.SetStatDelta("Boredom", -20)
 				cf()
 
 			case "eat":
 
 				// randomly pick a food
 				var food []string
-
 				if random.Intn(2) == 1 {
 					food = textart.Pizza
 				} else {
 					food = textart.Cheese
 				}
 
+				cf := display.CharacterSay("*nom nom nom*", 3, 0)
 				display.AnimateSlideIn(food)
+				cf()
+				pet.CurrentPet.SetStatDelta("Hunger", -15)
 
-				pet.CurrentPet.SetStat("Hunger", -15)
+			case "drink":
+
+				// randomly pick a drink
+				var drink []string
+				if random.Intn(2) == 1 {
+					drink = textart.Tea
+				} else {
+					drink = textart.Wine
+				}
+
+				cf := display.CharacterSay("*sluuuuurp*", 3, 0)
+				display.AnimateSlideIn(drink)
+				cf()
+				pet.CurrentPet.SetStat("Thirst", -15)
 
 			case "quit":
 				return
