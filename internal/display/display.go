@@ -102,6 +102,15 @@ func PrintTransparentMultiString(in []string, posX, posY int) {
 	displayLock.Unlock()
 }
 
+func PrintTransparentMultiRuneSlice(in [][]rune, posX, posY int) {
+	displayLock.Lock()
+	for i, x := range in {
+		rawTransparentPrintRunes(x, posX, posY+i)
+	}
+	Screen.Show()
+	displayLock.Unlock()
+}
+
 func PrintLine(fixedPos int, char rune, isVertical bool) {
 	displayLock.Lock()
 	var x, y, totalLen int

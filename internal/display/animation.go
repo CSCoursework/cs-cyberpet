@@ -10,7 +10,7 @@ func AnimateSlideIn(image []string) {
 	screenX, _ := Screen.Size()
 
 	// find center point in screen Y
-	_, ypos := findTopLeftCoord(image, tools.FindLongestStringLen(image))
+	_, ypos := FindTopLeftCoord(image, tools.FindLongestStringLen(image))
 
 	// find center point in screen X for the barrier
 	barrierX := screenX / 2

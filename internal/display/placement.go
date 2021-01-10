@@ -37,7 +37,7 @@ func Scaffold() {
 	PrintString(">", 0, InputLineNumber)
 }
 
-func findTopLeftCoord(character []string, longestStringLen int) (int, int) {
+func FindTopLeftCoord(character []string, longestStringLen int) (int, int) {
 	screenX, screenY := Screen.Size()
 	xpos := (screenX - longestStringLen) / 2
 	ypos := (screenY - len(character)) / 2
@@ -74,7 +74,7 @@ func ShowCharacterInCenter(character []string) {
 	}
 
 	LongestCharacterSection = tools.FindLongestStringLen(character)
-	CharacterXPos, CharacterYPos = findTopLeftCoord(character, LongestCharacterSection)
+	CharacterXPos, CharacterYPos = FindTopLeftCoord(character, LongestCharacterSection)
 
 	PrintTransparentMultiString(character, CharacterXPos, CharacterYPos)
 
