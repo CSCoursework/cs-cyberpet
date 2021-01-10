@@ -37,20 +37,15 @@ func Scaffold() {
 	PrintString(">", 0, InputLineNumber)
 }
 
-func ShowCharacterInCenter(character []string) {
-
-	if ClearCurrentCharacter != nil {
-		ClearCurrentCharacter()
-	}
-
-	LongestCharacterSection = tools.FindLongestStringLen(character)
+func findTopLeftCoord(character []string, longestStringLen int) (int, int) {
 	screenX, screenY := Screen.Size()
-	CharacterXPos = (screenX - LongestCharacterSection) / 2
-	CharacterYPos = (screenY - len(character)) / 2
+	xpos := (screenX - longestStringLen) / 2
+	ypos := (screenY - len(character)) / 2
+	return xpos, ypos
+}
 
-	PrintTransparentMultiString(character, CharacterXPos, CharacterYPos)
-
-	ClearCurrentCharacter = func() {
+func makeClearFunction(character []string, printedXPos, printedYPos int) func() {
+	return func() {
 		displayLock.Lock()
 		for i, line := range character {
 
@@ -65,9 +60,23 @@ func ShowCharacterInCenter(character []string) {
 			// make rune array of spaces that is representative of the amount of non-alignment spaces in the text art
 			blankRunes := tools.MakeRuneSlice(' ', len(line) - alignmentSpaces)
 			// print this rune array at the specified offset
-			rawPrintRunes(blankRunes, CharacterXPos+alignmentSpaces, CharacterYPos+i)
+			rawPrintRunes(blankRunes, printedXPos+alignmentSpaces, printedYPos+i)
 		}
 		Screen.Show()
 		displayLock.Unlock()
 	}
+}
+
+func ShowCharacterInCenter(character []string) {
+
+	if ClearCurrentCharacter != nil {
+		ClearCurrentCharacter()
+	}
+
+	LongestCharacterSection = tools.FindLongestStringLen(character)
+	CharacterXPos, CharacterYPos = findTopLeftCoord(character, LongestCharacterSection)
+
+	PrintTransparentMultiString(character, CharacterXPos, CharacterYPos)
+
+	ClearCurrentCharacter = makeClearFunction(character, CharacterXPos, CharacterYPos)
 }
