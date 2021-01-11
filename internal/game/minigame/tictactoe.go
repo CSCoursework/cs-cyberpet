@@ -59,6 +59,9 @@ func createBoardFromState(state [3][3]rune) [][]rune {
 	return outputBoard
 }
 
+// Tictactoe runs a tictactoe game... or would, if I finished it.
+// A return value of true would mean the player wins the game - conversely, a return value of false means the player
+// lost.
 func Tictactoe() bool {
 
 	var gameState [3][3]rune

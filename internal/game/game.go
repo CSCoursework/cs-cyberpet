@@ -20,6 +20,7 @@ var options = []string{
 
 var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 
+// Play runs the main loop for the game.
 func Play() {
 
 	for {
@@ -66,7 +67,7 @@ func Play() {
 
 				// randomly pick a food
 				var food []string
-				if random.Intn(2) == 1 {
+				if random.Intn(2) == 1 { // this is picking a number from 0<=n<2, *not* 0<=n<=2
 					food = textart.Pizza
 				} else {
 					food = textart.Cheese
