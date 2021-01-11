@@ -51,10 +51,13 @@ func Play() {
 
 			case "play":
 
-				// TODO: Minigame. Tictactoe or something?
-
 				cf := display.CharacterSay("wheee such fun", 3, 0)
 				minigame.Tictactoe()
+
+				// clear anything left over in the options block
+				display.PrintLine(display.StatusLineNumber, ' ', false)
+				display.PrintLine(display.OptionsLineNumber, ' ', false)
+
 				time.Sleep(time.Second * 2)
 				pet.CurrentPet.SetStatDelta("Boredom", -20)
 				cf()
