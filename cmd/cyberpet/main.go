@@ -8,7 +8,8 @@ import (
 
 func main() {
 
-	defer func() {
+	defer func() { // runs before this function exits - meaning even if something in the main thread panics and hard
+		// quits, this still gets run
 		ui.BeforeShutdown()
 	}()
 
