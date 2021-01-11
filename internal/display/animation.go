@@ -31,7 +31,7 @@ func AnimateSlideIn(image []string) {
 
 		cf()
 		PrintTransparentMultiString(modimg, xpos, ypos)
-		cf = makeClearFunction(modimg, xpos, ypos)
+		cf = MakeClearFunction(modimg, xpos, ypos)
 		ShowCharacterInCenter(textart.Tux)
 		time.Sleep(time.Second / 8)
 	}

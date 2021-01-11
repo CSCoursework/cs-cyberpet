@@ -44,7 +44,7 @@ func FindTopLeftCoord(character []string, longestStringLen int) (int, int) {
 	return xpos, ypos
 }
 
-func makeClearFunction(character []string, printedXPos, printedYPos int) func() {
+func MakeClearFunction(character []string, printedXPos, printedYPos int) func() {
 	return func() {
 		displayLock.Lock()
 		for i, line := range character {
@@ -78,5 +78,5 @@ func ShowCharacterInCenter(character []string) {
 
 	PrintTransparentMultiString(character, CharacterXPos, CharacterYPos)
 
-	ClearCurrentCharacter = makeClearFunction(character, CharacterXPos, CharacterYPos)
+	ClearCurrentCharacter = MakeClearFunction(character, CharacterXPos, CharacterYPos)
 }
