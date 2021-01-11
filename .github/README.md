@@ -1,5 +1,9 @@
 # cyberpet
 
+Golang 1.15.2, 810 lines of code
+
+![lil' demo](https://raw.githubusercontent.com/CSCoursework/cs-cyberpet/master/.github/anim.gif)
+
 ### No, this isn't really complete.
 
 The current state of this repo pretty much satisfies the project brief with the exception of the minigame, which is incomplete. It does some funky display stuff, but you can't actually play a game in it.
