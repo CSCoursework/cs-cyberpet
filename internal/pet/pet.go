@@ -42,6 +42,7 @@ type Stat struct {
 	Delta int
 }
 
+// FixStats ensures all stat values are within the range 0<=n<=100
 func (p *Pet) FixStats() {
 	for _, stat := range p.Stats {
 		nv := stat.Value
@@ -54,6 +55,7 @@ func (p *Pet) FixStats() {
 	}
 }
 
+// modval modifies the value of a set statistic by name, using the provided function
 func (p *Pet) modval(sname string, modfunc func(int) int) {
 	p.StatLock.Lock()
 	defer func() {
@@ -70,18 +72,21 @@ func (p *Pet) modval(sname string, modfunc func(int) int) {
 	panic(errors.New("modval: specified value not found"))
 }
 
+// SetStat sets the statistic by name to a certain value
 func (p *Pet) SetStat(sname string, val int) {
 	p.modval(sname, func(_ int) int {
 		return val
 	})
 }
 
+// SetStatDelta applies a delta to a statistic by name
 func (p *Pet) SetStatDelta(sname string, delta int) {
 	p.modval(sname, func(x int) int {
 		return x + delta
 	})
 }
 
+// NewPet creates a new Pet instance and returns a reference to it
 func NewPet(name string) *Pet {
 
 	p := &Pet{
@@ -91,6 +96,8 @@ func NewPet(name string) *Pet {
 		StatUpdateNotifier: make(chan bool),
 	}
 
+	// background stat update worker
+	// Further explanation about how this works can be found in the README.md file
 	go func() {
 		for {
 
