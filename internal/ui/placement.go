@@ -1,4 +1,4 @@
-package display
+package ui
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
@@ -7,6 +7,8 @@ import (
 )
 
 const (
+
+	// These constants represent the position of the top left corner of the information box.
 	infoBoxPosX = 2
 	infoBoxPosY = 1
 )
@@ -15,18 +17,25 @@ var (
 	infoBoxSizeX int
 	infoBoxSizeY int
 
+	// The following four global variables are updated by the ShowCharacterInCenter function
 	CharacterXPos           int
 	CharacterYPos           int
 	LongestCharacterSection int
-
 	ClearCurrentCharacter func()
 )
 
 func init() {
-	infoBoxSizeX = tools.FindLongestStringLen(pet.StatNames) + 4 + statTickerLen // plus four compensates for weird spacing
-	infoBoxSizeY = len(pet.DefaultPetStats) + 1                                  // plus one compensating for the top bottom border
+	// The size of the info box is determined based on the number of pet statistics and the statistic name lengths at
+	//startup
+
+	infoBoxSizeX = tools.FindLongestStringLen(pet.StatNames) + 4 + statTickerLen // plus four compensates for weird
+	// spacing
+	infoBoxSizeY = len(pet.DefaultPetStats) + 1                                  // plus one compensating for the top
+	// bottom border
 }
 
+// Scaffold draws the inital screen layout, with the Tux character, the info box, a line across the bottom of the screen
+// for the status bar and the ">" symbol where text is inputted from.
 func Scaffold() {
 	_, screenY := Screen.Size()
 
@@ -37,6 +46,8 @@ func Scaffold() {
 	PrintString(">", 0, InputLineNumber)
 }
 
+// FindTopLeftCoord is used to find the top left coordinate of an image based on its length and the length of its
+// longest part if that image is to be placed in the center of the console
 func FindTopLeftCoord(character []string, longestStringLen int) (int, int) {
 	screenX, screenY := Screen.Size()
 	xpos := (screenX - longestStringLen) / 2
@@ -44,6 +55,8 @@ func FindTopLeftCoord(character []string, longestStringLen int) (int, int) {
 	return xpos, ypos
 }
 
+// MakeClearFunction returns a function the clear any images that are printed to the console based on the image itself
+// and position it was printed in.
 func MakeClearFunction(character []string, printedXPos, printedYPos int) func() {
 	return func() {
 		displayLock.Lock()
@@ -67,6 +80,11 @@ func MakeClearFunction(character []string, printedXPos, printedYPos int) func() 
 	}
 }
 
+// ShowCharacterInCenter prints the current character in the center of the console and updates the following global variables:
+// * ClearCurrentCharacter
+// * LongestCharacterSection
+// * CharacterXPos
+// * CharacterYPos
 func ShowCharacterInCenter(character []string) {
 
 	if ClearCurrentCharacter != nil {

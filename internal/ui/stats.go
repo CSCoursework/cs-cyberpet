@@ -1,4 +1,4 @@
-package display
+package ui
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/pet"
@@ -11,18 +11,21 @@ import (
 const (
 	fullBlock     = '█'
 	emptyBlock    = ' '
+	// the amount of characters available for a single stats progress bar
 	statTickerLen = 20
 )
 
+// UpdateStats takes a reference to a pet and shows its statistics in the info box in the console
 func UpdateStats(petInfo *pet.Pet) {
 
-	longestStatNameLen := tools.FindLongestStringLen(pet.StatNames) + 2 // adding two adds a gap between the label and the ticker bar
+	longestStatNameLen := tools.FindLongestStringLen(pet.StatNames) + 2 // adding two adds a gap between the label and
+	// the ticker bar
 
 	displayLock.Lock()
 	petInfo.StatLock.RLock()
 
 	for i, stat := range petInfo.Stats {
-		lineNum := infoBoxPosY + i + 1 // plus one to allow for the border, plus one for nice spacing
+		lineNum := infoBoxPosY + i + 1 // plus one to allow for the top border
 
 		// make label
 		asRunes := []rune(tools.RightPadString(stat.Name, longestStatNameLen, ' '))
@@ -42,6 +45,8 @@ func UpdateStats(petInfo *pet.Pet) {
 	displayLock.Unlock()
 }
 
+// StartStatLoop starts a background worker that updates that statistics in the UI whenever they are modified in the
+// worker. Further explanation about how this function works can be found in the README.md file for this project.
 func StartStatLoop(pt *pet.Pet) {
 	UpdateStats(pt)
 	go func(pt *pet.Pet) {

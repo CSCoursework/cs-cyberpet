@@ -2,7 +2,7 @@ package minigame
 
 import (
 	"errors"
-	"github.com/codemicro/cs-cyberpet/internal/display"
+	"github.com/codemicro/cs-cyberpet/internal/ui"
 	"github.com/codemicro/cs-cyberpet/internal/tools"
 	"os"
 	"regexp"
@@ -63,7 +63,7 @@ func Tictactoe() bool {
 
 	var gameState [3][3]rune
 
-	xPos, screenY := display.Screen.Size()
+	xPos, screenY := ui.Screen.Size()
 	yPos := (screenY - len(tttBoard)) / 2
 
 	xPos -= 30
@@ -73,28 +73,28 @@ func Tictactoe() bool {
 		for _, l := range tttBoard {
 			s = append(s, string(l))
 		}
-		display.MakeClearFunction(s, xPos, yPos)()
+		ui.MakeClearFunction(s, xPos, yPos)()
 	}()
 
-	display.PrintTransparentMultiRuneSlice(createBoardFromState(gameState), xPos, yPos)
+	ui.PrintTransparentMultiRuneSlice(createBoardFromState(gameState), xPos, yPos)
 
 	for i := 0; i < 6; i += 1 {
-		display.PrintLine(display.OptionsLineNumber, ' ', false)
-		display.PrintString("Input a coordinate (eg A1)", 0, display.OptionsLineNumber)
+		ui.PrintLine(ui.OptionsLineNumber, ' ', false)
+		ui.PrintString("Input a coordinate (eg A1)", 0, ui.OptionsLineNumber)
 
 		for {
 			var inp string
 			for !inputValidationRegex.MatchString(inp) {
 
 				if inp != "" {
-					display.PrintLine(display.OptionsLineNumber, ' ', false)
-					display.PrintString("That coordinate was invalid. Input another coordinate (eg A1)", 0, display.OptionsLineNumber)
+					ui.PrintLine(ui.OptionsLineNumber, ' ', false)
+					ui.PrintString("That coordinate was invalid. Input another coordinate (eg A1)", 0, ui.OptionsLineNumber)
 				}
 
 				var err error
-				inp, err = display.CollectInputAtPosition(os.Stdin, 2, display.InputLineNumber, true, 2)
+				inp, err = ui.CollectInputAtPosition(os.Stdin, 2, ui.InputLineNumber, true, 2)
 				if err != nil {
-					if errors.Is(err, display.ErrorInputTerminated) {
+					if errors.Is(err, ui.ErrorInputTerminated) {
 						return false
 					}
 					panic(err)
@@ -113,12 +113,12 @@ func Tictactoe() bool {
 				gameState[col][row] = 'x'
 				break
 			} else {
-				display.PrintLine(display.OptionsLineNumber, ' ', false)
-				display.PrintString("That position is already occupied. Input another coordinate (eg A1)", 0, display.OptionsLineNumber)
+				ui.PrintLine(ui.OptionsLineNumber, ' ', false)
+				ui.PrintString("That position is already occupied. Input another coordinate (eg A1)", 0, ui.OptionsLineNumber)
 			}
 		}
 
-		display.PrintTransparentMultiRuneSlice(createBoardFromState(gameState), xPos, yPos)
+		ui.PrintTransparentMultiRuneSlice(createBoardFromState(gameState), xPos, yPos)
 	}
 
 	return true

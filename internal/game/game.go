@@ -2,7 +2,7 @@ package game
 
 import (
 	"errors"
-	"github.com/codemicro/cs-cyberpet/internal/display"
+	"github.com/codemicro/cs-cyberpet/internal/ui"
 	"github.com/codemicro/cs-cyberpet/internal/game/minigame"
 	"github.com/codemicro/cs-cyberpet/internal/pet"
 	"github.com/codemicro/cs-cyberpet/internal/textart"
@@ -23,9 +23,9 @@ var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 func Play() {
 
 	for {
-		_, chosenOption, err := display.SelectOption(options)
+		_, chosenOption, err := ui.SelectOption(options)
 		if err != nil {
-			if errors.Is(err, display.ErrorInputTerminated) {
+			if errors.Is(err, ui.ErrorInputTerminated) {
 				return
 			} else {
 				panic(err)
@@ -37,9 +37,9 @@ func Play() {
 			switch chosenOption {
 			case "sleep":
 
-				display.ShowCharacterInCenter(textart.Bed)
+				ui.ShowCharacterInCenter(textart.Bed)
 
-				cf := display.CharacterSay("zzzzZZZZZzzzz", 3, 3)
+				cf := ui.CharacterSay("zzzzZZZZZzzzz", 3, 3)
 				time.Sleep(2 * time.Second)
 
 				pet.CurrentPet.SetStat("Fatigue", 0)
@@ -47,16 +47,16 @@ func Play() {
 
 				cf()
 
-				display.ShowCharacterInCenter(textart.Tux)
+				ui.ShowCharacterInCenter(textart.Tux)
 
 			case "play":
 
-				cf := display.CharacterSay("wheee such fun", 3, 0)
+				cf := ui.CharacterSay("wheee such fun", 3, 0)
 				minigame.Tictactoe()
 
 				// clear anything left over in the options block
-				display.PrintLine(display.StatusLineNumber, ' ', false)
-				display.PrintLine(display.OptionsLineNumber, ' ', false)
+				ui.PrintLine(ui.StatusLineNumber, ' ', false)
+				ui.PrintLine(ui.OptionsLineNumber, ' ', false)
 
 				time.Sleep(time.Second * 2)
 				pet.CurrentPet.SetStatDelta("Boredom", -20)
@@ -72,8 +72,8 @@ func Play() {
 					food = textart.Cheese
 				}
 
-				cf := display.CharacterSay("*nom nom nom*", 3, 0)
-				display.AnimateSlideIn(food)
+				cf := ui.CharacterSay("*nom nom nom*", 3, 0)
+				ui.AnimateSlideIn(food)
 				cf()
 				pet.CurrentPet.SetStatDelta("Hunger", -15)
 
@@ -87,8 +87,8 @@ func Play() {
 					drink = textart.Wine
 				}
 
-				cf := display.CharacterSay("*sluuuuurp*", 3, 0)
-				display.AnimateSlideIn(drink)
+				cf := ui.CharacterSay("*sluuuuurp*", 3, 0)
+				ui.AnimateSlideIn(drink)
 				cf()
 				pet.CurrentPet.SetStat("Thirst", -15)
 

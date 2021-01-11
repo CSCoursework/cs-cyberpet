@@ -1,4 +1,4 @@
-package display
+package ui
 
 import (
 	"github.com/codemicro/cs-cyberpet/internal/tools"
@@ -14,6 +14,7 @@ const (
 	horiChar = '─'
 )
 
+// Box prints a box between a specified top left position and bottom right position, as well as an optional title
 func Box(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	displayLock.Lock()
 	rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY, title)
@@ -21,6 +22,8 @@ func Box(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	displayLock.Unlock()
 }
 
+// rawBox prints a box between a specified top left position and bottom right position, as well as an optional title.
+// This function should not be called without first locking displayLock
 func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 	width := bottomRightX - topLeftX
 	height := bottomRightY - topLeftY
@@ -44,15 +47,15 @@ func rawBox(topLeftX, topLeftY, bottomRightX, bottomRightY int, title string) {
 		copy(bottomLine, rs)
 
 		// add corner sections
-
 		topLine[0] = tlChar
 		topLine[len(topLine)-1] = trChar
+		bottomLine[0] = blChar
+		bottomLine[len(bottomLine)-1] = brChar
+
+		// sub the title in on the top line
 		for i, v := range title {
 			topLine[i+1] = v
 		}
-
-		bottomLine[0] = blChar
-		bottomLine[len(bottomLine)-1] = brChar
 	}
 
 	{

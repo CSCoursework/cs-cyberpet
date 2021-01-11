@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/codemicro/cs-cyberpet/internal/display"
+	"github.com/codemicro/cs-cyberpet/internal/ui"
 	"github.com/codemicro/cs-cyberpet/internal/game"
 	"github.com/codemicro/cs-cyberpet/internal/pet"
 )
@@ -9,13 +9,13 @@ import (
 func main() {
 
 	defer func() {
-		display.BeforeShutdown()
+		ui.BeforeShutdown()
 	}()
 
-	display.Scaffold()
+	ui.Scaffold()
 
 	pet.CurrentPet = pet.NewPet("Tux")
-	display.StartStatLoop(pet.CurrentPet)
+	ui.StartStatLoop(pet.CurrentPet)
 
 	game.Play()
 
