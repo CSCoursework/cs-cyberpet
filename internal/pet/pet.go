@@ -16,7 +16,7 @@ var (
 		{Name: "Fatigue", Value: 0, Delta: 2},
 	}
 	StatNames          []string
-	StatUpdateInterval = time.Second / 2
+	StatUpdateInterval = time.Second * 5
 
 	CurrentPet *Pet
 )
